@@ -20,16 +20,28 @@ export default function CustomDrawer(props: any) {
       {/* Middle Items */}
       <View>
         <DrawerItem
+          focused={props.state.index === 0}
+          labelStyle={
+            props.state.index === 0 ? styles.selectedItem : styles.itemText
+          }
           label={() => <Text style={styles.itemText}>🏠 Home</Text>}
           onPress={() => props.navigation.navigate('Home')}
         />
 
         <DrawerItem
+          focused={props.state.index === 1}
+          labelStyle={
+            props.state.index === 1 ? styles.selectedItem : styles.itemText
+          }
           label={() => <Text style={styles.itemText}>🔎 Search</Text>}
           onPress={() => props.navigation.navigate('Search')}
         />
 
         <DrawerItem
+          focused={props.state.index === 2}
+          labelStyle={
+            props.state.index === 2 ? styles.selectedItem : styles.itemText
+          }
           label={() => <Text style={styles.itemText}>👤 Profile</Text>}
           onPress={() => props.navigation.navigate('Profile')}
         />
@@ -65,6 +77,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
+  selectedItem: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#4F46E5', // highlighted color
+  },
   logoutText: {
     fontSize: 20, // bigger font
     fontWeight: 'bold',
