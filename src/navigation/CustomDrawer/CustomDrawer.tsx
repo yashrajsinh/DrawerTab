@@ -1,6 +1,6 @@
-import { View, Text, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import React from 'react';
-//Drawer
+// Drawer
 import {
   DrawerContentScrollView,
   DrawerItem,
@@ -10,28 +10,65 @@ import Header from '../../components/Header/Header';
 
 export default function CustomDrawer(props: any) {
   return (
-    <DrawerContentScrollView {...props}>
-      {/* Custom Header Component*/}
+    <DrawerContentScrollView
+      {...props}
+      contentContainerStyle={styles.container}
+    >
+      {/* Header */}
       <Header />
 
-      {/* Custom Item */}
-      <DrawerItem
-        label="🏠 Home"
-        onPress={() => props.navigation.navigate('Home')}
-      />
+      {/* Middle Items */}
+      <View>
+        <DrawerItem
+          label={() => <Text style={styles.itemText}>🏠 Home</Text>}
+          onPress={() => props.navigation.navigate('Home')}
+        />
 
-      <DrawerItem
-        label="🔎 Search"
-        onPress={() => props.navigation.navigate('Search')}
-      />
+        <DrawerItem
+          label={() => <Text style={styles.itemText}>🔎 Search</Text>}
+          onPress={() => props.navigation.navigate('Search')}
+        />
 
-      <DrawerItem
-        label="👤 Profile"
-        onPress={() => props.navigation.navigate('Profile')}
-      />
-      {/* default items */}
-      <DrawerItemList {...props} />
-      {/* custom items */}
+        <DrawerItem
+          label={() => <Text style={styles.itemText}>👤 Profile</Text>}
+          onPress={() => props.navigation.navigate('Profile')}
+        />
+
+        {/* Default Drawer Items */}
+        <DrawerItemList {...props} />
+      </View>
+
+      {/* Logout at the bottom */}
+      <View style={styles.bottomContainer}>
+        <DrawerItem
+          label={() => <Text style={styles.logoutText}>🚪 Logout</Text>}
+          onPress={() => Alert.alert('Logout', 'You pressed logout!')}
+        />
+      </View>
     </DrawerContentScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between', // push bottomContainer to bottom
+  },
+  bottomContainer: {
+    padding: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#eee',
+  },
+
+  itemText: {
+    fontSize: 20, // bigger font for Home, Search, Profile
+    fontWeight: 'bold',
+  },
+
+  logoutText: {
+    fontSize: 20, // bigger font
+    fontWeight: 'bold',
+    color: '#E11D48', // red-ish color for emphasis
+    textAlign: 'center',
+  },
+});
