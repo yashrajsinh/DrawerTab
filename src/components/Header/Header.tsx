@@ -20,15 +20,15 @@ export default Header;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 40,
     backgroundColor: '#8494FF',
     alignItems: 'center',
-    borderRadius: 20,
+    borderRadius: 15,
   },
 
   avatar: {
-    width: 70,
-    height: 70,
+    width: 80,
+    height: 80,
     borderRadius: 35,
     marginBottom: 10,
   },
