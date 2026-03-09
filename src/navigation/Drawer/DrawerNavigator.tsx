@@ -3,9 +3,9 @@ import { Text } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 // Screens
-import HomeScreen from '../screens/HomeScreen';
-import SearchScreen from '../screens/SearchScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+import HomeScreen from '../../screens/HomeScreen';
+import ProfileScreen from '../../screens/ProfileScreen';
+import SearchScreen from '../../screens/SearchScreen';
 
 //Drawer reference
 const Drawer = createDrawerNavigator();
