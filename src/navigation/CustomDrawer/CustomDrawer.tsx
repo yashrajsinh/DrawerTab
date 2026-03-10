@@ -3,10 +3,10 @@ import React from 'react';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import Header from '../../components/Header/Header';
 
-export default function CustomDrawer(props: any) {
+export default function CustomDrawer(props) {
   const { activeScreen, setActiveScreen, navigation } = props;
 
-  //  Helper: navigate drawer AND update shared state
+  // Helper: navigate drawer AND update shared state
   const navigateTo = (screen: string) => {
     setActiveScreen(screen); // tell Tabs to switch
     navigation.closeDrawer(); // close the drawer
@@ -21,7 +21,7 @@ export default function CustomDrawer(props: any) {
 
       <View>
         <DrawerItem
-          focused={activeScreen === 'Home'} // 👈 highlight based on shared state
+          focused={activeScreen === 'Home'} // highlight based on shared state
           label={() => (
             <Text
               style={
