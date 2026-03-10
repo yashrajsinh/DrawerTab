@@ -1,44 +1,70 @@
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import React from 'react';
-// Drawer
-import {
-  DrawerContentScrollView,
-  DrawerItem,
-  DrawerItemList,
-} from '@react-navigation/drawer';
+import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import Header from '../../components/Header/Header';
 
 export default function CustomDrawer(props: any) {
+  const { activeScreen, setActiveScreen, navigation } = props;
+
+  //  Helper: navigate drawer AND update shared state
+  const navigateTo = (screen: string) => {
+    setActiveScreen(screen); // tell Tabs to switch
+    navigation.closeDrawer(); // close the drawer
+  };
+
   return (
     <DrawerContentScrollView
       {...props}
       contentContainerStyle={styles.container}
     >
-      {/* Header */}
       <Header />
 
-      {/* Middle Items */}
       <View>
         <DrawerItem
-          label={() => <Text style={styles.itemText}>🏠 Home</Text>}
-          onPress={() => props.navigation.navigate('Home')}
+          focused={activeScreen === 'Home'} // 👈 highlight based on shared state
+          label={() => (
+            <Text
+              style={
+                activeScreen === 'Home' ? styles.selectedItem : styles.itemText
+              }
+            >
+              🏠 Home
+            </Text>
+          )}
+          onPress={() => navigateTo('Home')}
         />
-
         <DrawerItem
-          label={() => <Text style={styles.itemText}>🔎 Search</Text>}
-          onPress={() => props.navigation.navigate('Search')}
+          focused={activeScreen === 'Search'}
+          label={() => (
+            <Text
+              style={
+                activeScreen === 'Search'
+                  ? styles.selectedItem
+                  : styles.itemText
+              }
+            >
+              🔎 Search
+            </Text>
+          )}
+          onPress={() => navigateTo('Search')}
         />
-
         <DrawerItem
-          label={() => <Text style={styles.itemText}>👤 Profile</Text>}
-          onPress={() => props.navigation.navigate('Profile')}
+          focused={activeScreen === 'Profile'}
+          label={() => (
+            <Text
+              style={
+                activeScreen === 'Profile'
+                  ? styles.selectedItem
+                  : styles.itemText
+              }
+            >
+              👤 Profile
+            </Text>
+          )}
+          onPress={() => navigateTo('Profile')}
         />
-
-        {/* Default Drawer Items */}
-        <DrawerItemList {...props} />
       </View>
 
-      {/* Logout at the bottom */}
       <View style={styles.bottomContainer}>
         <DrawerItem
           label={() => <Text style={styles.logoutText}>🚪 Logout</Text>}
@@ -50,25 +76,14 @@ export default function CustomDrawer(props: any) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between', // push bottomContainer to bottom
-  },
-  bottomContainer: {
-    padding: 20,
-    borderTopWidth: 1,
-    borderTopColor: '#eee',
-  },
-
-  itemText: {
-    fontSize: 20, // bigger font for Home, Search, Profile
-    fontWeight: 'bold',
-  },
-
+  container: { flex: 1, justifyContent: 'space-between' },
+  bottomContainer: { padding: 20, borderTopWidth: 1, borderTopColor: '#eee' },
+  itemText: { fontSize: 20, fontWeight: 'bold' },
+  selectedItem: { fontSize: 20, fontWeight: 'bold', color: '#4F46E5' },
   logoutText: {
-    fontSize: 20, // bigger font
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#E11D48', // red-ish color for emphasis
+    color: '#E11D48',
     textAlign: 'center',
   },
 });

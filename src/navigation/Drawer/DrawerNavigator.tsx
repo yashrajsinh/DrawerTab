@@ -1,21 +1,28 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
-// Screens
-import HomeScreen from '../../screens/HomeScreen';
-import ProfileScreen from '../../screens/ProfileScreen';
-import SearchScreen from '../../screens/SearchScreen';
 import CustomDrawer from '../CustomDrawer/CustomDrawer';
+import Tabs from '../Tab/Tabs';
 
-//Drawer reference
 const Drawer = createDrawerNavigator();
 
-export default function DrawerNavigator() {
+// 👇 Accept the shared state as props
+export default function DrawerNavigator({
+  activeScreen,
+  setActiveScreen,
+}: {
+  activeScreen: string;
+  setActiveScreen: (screen: string) => void;
+}) {
   return (
     <Drawer.Navigator
-      initialRouteName="Home"
-      drawerContent={props => <CustomDrawer {...props} />}
+      drawerContent={props => (
+        <CustomDrawer
+          {...props}
+          activeScreen={activeScreen} // 👈 pass down
+          setActiveScreen={setActiveScreen} // 👈 pass down
+        />
+      )}
       screenOptions={({ navigation }) => ({
         drawerType: 'slide',
         headerLeft: () => (
@@ -28,22 +35,18 @@ export default function DrawerNavigator() {
         ),
       })}
     >
-      {/*Adding screens and hidding it drawer so we can ad custom buttons */}
+      {/* Only ONE screen needed now — Tabs handles everything */}
       <Drawer.Screen
-        name="Home"
-        component={HomeScreen}
+        name={activeScreen}
         options={{ drawerItemStyle: { display: 'none' } }}
-      />
-      <Drawer.Screen
-        name="Search"
-        component={SearchScreen}
-        options={{ drawerItemStyle: { display: 'none' } }}
-      />
-      <Drawer.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{ drawerItemStyle: { display: 'none' } }}
-      />
+      >
+        {() => (
+          <Tabs
+            activeScreen={activeScreen}
+            setActiveScreen={setActiveScreen} //  Tab tells us when it changes
+          />
+        )}
+      </Drawer.Screen>
     </Drawer.Navigator>
   );
 }
