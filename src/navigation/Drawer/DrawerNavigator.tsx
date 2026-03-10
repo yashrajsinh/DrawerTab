@@ -6,21 +6,15 @@ import Tabs from '../Tab/Tabs';
 
 const Drawer = createDrawerNavigator();
 
-// 👇 Accept the shared state as props
-export default function DrawerNavigator({
-  activeScreen,
-  setActiveScreen,
-}: {
-  activeScreen: string;
-  setActiveScreen: (screen: string) => void;
-}) {
+//  Accept the shared state as props
+export default function DrawerNavigator({ activeScreen, setActiveScreen }) {
   return (
     <Drawer.Navigator
       drawerContent={props => (
         <CustomDrawer
           {...props}
-          activeScreen={activeScreen} // 👈 pass down
-          setActiveScreen={setActiveScreen} // 👈 pass down
+          activeScreen={activeScreen} //  Passes active screen in drawer
+          setActiveScreen={setActiveScreen} //  pass down
         />
       )}
       screenOptions={({ navigation }) => ({
@@ -36,10 +30,7 @@ export default function DrawerNavigator({
       })}
     >
       {/* Only ONE screen needed now — Tabs handles everything */}
-      <Drawer.Screen
-        name={activeScreen}
-        options={{ drawerItemStyle: { display: 'none' } }}
-      >
+      <Drawer.Screen name={activeScreen}>
         {() => (
           <Tabs
             activeScreen={activeScreen}

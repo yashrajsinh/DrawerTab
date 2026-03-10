@@ -6,22 +6,24 @@ import ProfileScreen from '../../screens/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
-export default function Tabs({
-  activeScreen,
-  setActiveScreen,
-}: {
-  activeScreen: string;
-  setActiveScreen: (screen: string) => void;
-}) {
+export default function Tabs({ activeScreen, setActiveScreen }) {
   return (
     <Tab.Navigator
-      // 👇 Jump to whatever screen the drawer selected
+      screenOptions={{
+        headerShown: false, // removes the top header
+      }}
+      // This screen will show first when the app loads
       initialRouteName={activeScreen}
+      // Listen for when a tab is pressed
       screenListeners={{
-        // 👇 When user taps a tab, tell the drawer about it
         tabPress: e => {
-          const screenName = e.target?.split('-')[0]; // extracts "Search" from "Search-abc123"
-          if (screenName) setActiveScreen(screenName);
+          // Get the name of the tab that was pressed
+          const fullTarget = e.target;
+          const screenName = fullTarget?.split('-')[0]; // "Search"
+          // Update the active screen
+          if (screenName) {
+            setActiveScreen(screenName);
+          }
         },
       }}
     >
